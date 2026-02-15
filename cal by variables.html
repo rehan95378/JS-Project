@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+    <style>
+        .container {
+            border: 1px solid rgb(187, 183, 183);
+            border-radius: 5px;
+            width: 200px;
+        }
+
+        .input_container {
+            margin: 10px;
+            width: 85%;
+            font-size: 25px;
+        }
+
+        .num_container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .box {
+            width: 45px;
+            height: 45px;
+            margin: 3px;
+        }
+
+        h2 {
+            margin-left: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h2>CALCULATOR</h2>
+    </header>
+    <main>
+        <div class="container">
+            <div class="input_container">
+                <input type="text" class="input" readonly>
+            </div>
+            <div class="num_container">
+
+                <button class="box"
+                 onclick="currentdisplay='' ;
+                document.querySelector('.input').value = currentdisplay;">C</button>
+
+                <button class="box" onclick="currentdisplay=currentdisplay + '1' ;
+                document.querySelector('.input').value = currentdisplay;">1</button>
+
+                <button class="box" onclick="currentdisplay=currentdisplay + '2' ;
+                document.querySelector('.input').value = currentdisplay;">2</button>
+
+                <button class="box" onclick="currentdisplay=currentdisplay + '+' ;
+                document.querySelector('.input').value = currentdisplay;">+</button>
+
+                <button class="box" onclick="currentdisplay=currentdisplay + '3' ;
+                document.querySelector('.input').value = currentdisplay;">3</button>
+
+                <button class="box" onclick="currentdisplay=currentdisplay + '4' ;
+                document.querySelector('.input').value = currentdisplay;">4</button>
+                
+                <button class="box" onclick="currentdisplay=currentdisplay + '-' ;
+                document.querySelector('.input').value = currentdisplay;">-</button>
+
+                <button class="box" onclick="currentdisplay=currentdisplay + '5' ;
+                document.querySelector('.input').value = currentdisplay;">5</button>
+
+                <button class="box" onclick="currentdisplay=currentdisplay + '6' ;
+                document.querySelector('.input').value = currentdisplay;">6</button>
+
+                <button class="box" onclick="currentdisplay=currentdisplay + '*' ;
+                document.querySelector('.input').value = currentdisplay;">*</button>
+
+                <button class="box" onclick="currentdisplay=currentdisplay + '7' ;
+                document.querySelector('.input').value = currentdisplay;">7</button>
+
+                <button class="box" onclick="currentdisplay=currentdisplay + '8' ;
+                document.querySelector('.input').value = currentdisplay;">8</button>
+
+                <button class="box" onclick="currentdisplay=currentdisplay + '/' ;
+                document.querySelector('.input').value = currentdisplay;">/</button>
+
+                <button class="box"
+                onclick="currentdisplay = eval(currentdisplay) ;
+                document.querySelector('.input').value = currentdisplay;">=</button>
+
+                <button class="box" onclick="currentdisplay=currentdisplay + '9' ;
+                document.querySelector('.input').value = currentdisplay;">9</button>
+
+                <button class="box" onclick="currentdisplay=currentdisplay + '0' ;
+                document.querySelector('.input').value = currentdisplay;">0</button>
+                
+                <button class="box" onclick="currentdisplay=currentdisplay + '.' ;
+                document.querySelector('.input').value = currentdisplay;">.</button>
+
+            </div>
+        </div>
+    </main>
+
+
+    <script>
+        let currentdisplay = '';
+        document.querySelector('.input').value = currentdisplay;
+    </script>
+</body>
+
+</html>

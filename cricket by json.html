@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Cricket Game</title>
+  <link rel="stylesheet" href="cricket.css">
+</head>
+<body>
+  <h1>Bat Ball Stump Game</h1>
+
+  <button class="choice-button" onclick="
+  let computerChoice = generateComputerChoice();
+  let resultMsg = getResult('Bat', computerChoice);
+  showResult('Bat', computerChoice, resultMsg);
+  ">
+    <img src="images/bat.png" alt="Bat Image" class="choice-image">  
+  </button>
+
+  <button class="choice-button" onclick="
+    computerChoice = generateComputerChoice();
+    resultMsg = getResult('Ball', computerChoice);
+    showResult('Ball', computerChoice, resultMsg);
+  ">
+    <img src="images/ball.png" alt="Ball Image" class="choice-image">  
+  </button>
+
+  <button class="choice-button" onclick="
+    computerChoice = generateComputerChoice();
+    resultMsg = getResult('Stump', computerChoice);
+    showResult('Stump', computerChoice, resultMsg);
+  ">
+    <img src="images/stump.png" alt="Stump Image" class="choice-image">
+  </button>
+
+  <h3 id="user-move"></h3>
+  <h3 id="computer-move"></h3>
+  <h3 id="result"></h3>
+  <h3 id="score"></h3>
+
+  <button onclick="localStorage.clear()
+      resetScore();
+  ">Reset</button>
+
+  <script>
+    let scoreStr = localStorage.getItem('Score');
+    let score;
+    resetScore(scoreStr);
+
+    function resetScore(scoreStr) {
+      score = scoreStr ? JSON.parse(scoreStr) : {
+        win: 0,
+        lost: 0,
+        tie: 0,
+      };
+
+      score.displayScore = function() {
+        return `Score:Won:${score.win}, Lost:${score.lost}, Tie: ${score.tie}`;
+      };
+
+      showResult();
+    }
+
+    function generateComputerChoice() {
+      //This will generate random number between 0 and 3
+      let randomNumber = Math.random() * 3;
+      if (randomNumber > 0 && randomNumber <= 1) {
+        return 'Bat';
+      } else if (randomNumber > 1 && randomNumber <= 2) {
+        return 'Ball';
+      } else {
+        return 'Stump'
+      }
+    }
+
+    function getResult(userMove, computerMove) {
+      if (userMove === 'Bat') {
+        if (computerMove === 'Ball') {
+          score.win++;
+          return 'User won.';
+        } else if (computerMove === 'Bat') {
+          score.tie++;
+          return `It's a tie`;
+        } else if (computerMove === 'Stump') {
+          score.lost++;
+          return 'Computer has won';
+        }
+      } else if (userMove === 'Ball') {
+        if (computerMove === 'Ball') {
+          score.tie++;
+          return `It's a tie`;
+        } else if (computerMove === 'Bat') {
+          score.lost++;
+          return 'Computer has won';
+        } else if (computerMove === 'Stump') {
+          score.win++;
+          return 'User won.';
+        }
+      } else {
+        if (computerMove === 'Ball') {
+          score.lost++;
+          return 'Computer has won';
+        } else if (computerMove === 'Bat') {
+          score.win++;
+          return 'User won.';
+        } else if (computerMove === 'Stump') {
+          score.tie++;
+          return `It's a tie`;
+        }
+      }
+    }
+
+    function showResult(userMove, computerMove, result) {
+      localStorage.setItem('Score', JSON.stringify(score));
+      
+      document.querySelector('#user-move').innerText = 
+        userMove ? `You have chosen ${userMove}` : '';
+      
+      document.querySelector('#computer-move').innerText =
+        computerMove ? `Computer choice is ${computerMove}` : '';
+      
+      document.querySelector('#result').innerText = result || '';
+
+      document.querySelector('#score').innerText = score.displayScore();
+    }
+  </script>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Cricket Game</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      text-align: center;
+      background: linear-gradient(135deg, #1a2a3a, #2c3e50);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .container {
+      max-width: 800px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    h1 {
+      color: #FFD700;
+      font-size: 2.8rem;
+      margin-bottom: 25px;
+      text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+      letter-spacing: 1px;
+    }
+    
+    .game-rules {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-left: 4px solid #FFD700;
+    }
+    
+    .game-rules h3 {
+      color: #4ECDC4;
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+    }
+    
+    .game-rules p {
+      color: #ddd;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    
+    .choices-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 40px 0;
+    }
+    
+    .choice-button {
+      height: 130px;
+      width: 130px;
+      border: none;
+      background: linear-gradient(145deg, #3498db, #2980b9);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .choice-button:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(145deg, #3cb0fd, #3498db);
+    }
+    
+    .choice-button:active {
+      transform: translateY(-5px);
+    }
+    
+    .choice-button::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.5);
+    }
+    
+    #bat-btn {
+      background: linear-gradient(145deg, #2ecc71, #27ae60);
+    }
+    
+    #bat-btn:hover {
+      background: linear-gradient(145deg, #34e87a, #2ecc71);
+    }
+    
+    #ball-btn {
+      background: linear-gradient(145deg, #e74c3c, #c0392b);
+    }
+    
+    #ball-btn:hover {
+      background: linear-gradient(145deg, #ff6656, #e74c3c);
+    }
+    
+    #stump-btn {
+      background: linear-gradient(145deg, #9b59b6, #8e44ad);
+    }
+    
+    #stump-btn:hover {
+      background: linear-gradient(145deg, #b07cc6, #9b59b6);
+    }
+    
+    .choice-image {
+      height: 80px;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+      transition: transform 0.3s ease;
+    }
+    
+    .choice-button:hover .choice-image {
+      transform: scale(1.1);
+    }
+    
+    .results-container {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 15px;
+      padding: 25px;
+      margin: 30px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      text-align: left;
+    }
+    
+    .result-item {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 10px;
+      border-left: 3px solid;
+    }
+    
+    #user-move {
+      border-color: #2ecc71;
+    }
+    
+    #computer-move {
+      border-color: #e74c3c;
+    }
+    
+    #result {
+      border-color: #3498db;
+      grid-column: span 2;
+      text-align: center;
+      font-size: 1.4rem;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    
+    .win-text {
+      color: #2ecc71;
+      font-weight: bold;
+    }
+    
+    .lose-text {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+    
+    .tie-text {
+      color: #f1c40f;
+      font-weight: bold;
+    }
+    
+    #score {
+      font-size: 1.5rem;
+      color: #FFD700;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      border: 2px solid rgba(255, 215, 0, 0.3);
+    }
+    
+    .reset-btn {
+      background: linear-gradient(145deg, #e74c3c, #c0392b);
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 0 auto;
+    }
+    
+    .reset-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(145deg, #ff6656, #e74c3c);
+    }
+    
+    .choice-label {
+      position: absolute;
+      bottom: 10px;
+      color: white;
+      font-weight: bold;
+      font-size: 1.1rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    h3 {
+      margin: 10px 0;
+      font-weight: 600;
+    }
+    
+    .game-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+    
+    .game-title i {
+      color: #FFD700;
+      font-size: 2.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .choices-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      
+      .choice-button {
+        width: 150px;
+        height: 150px;
+      }
+      
+      .results-container {
+        grid-template-columns: 1fr;
+      }
+      
+      #result {
+        grid-column: span 1;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="game-title">
+      <i class="fas fa-trophy"></i>
+      <h1>Bat Ball Stump Game</h1>
+      <i class="fas fa-trophy"></i>
+    </div>
+    
+    <div class="game-rules">
+      <h3>How to Play:</h3>
+      <p>Choose Bat, Ball, or Stump. Bat beats Ball, Ball beats Stump, Stump beats Bat. Try to beat the computer!</p>
+    </div>
+    
+    <div class="choices-container">
+      <button id="bat-btn" class="choice-button" onclick="
+        let computerChoice = generateComputerChoice();
+        let resultMsg = getResult('Bat', computerChoice);
+        showResult('Bat', computerChoice, resultMsg);
+      ">
+        <img src="https://cdn-icons-png.flaticon.com/512/2972/2972544.png" alt="Bat Image" class="choice-image">
+        <div class="choice-label">BAT</div>
+      </button>
+
+      <button id="ball-btn" class="choice-button" onclick="
+        computerChoice = generateComputerChoice();
+        resultMsg = getResult('Ball', computerChoice);
+        showResult('Ball', computerChoice, resultMsg);
+      ">
+        <img src="https://cdn-icons-png.flaticon.com/512/2972/2972423.png" alt="Ball Image" class="choice-image">
+        <div class="choice-label">BALL</div>
+      </button>
+
+      <button id="stump-btn" class="choice-button" onclick="
+        computerChoice = generateComputerChoice();
+        resultMsg = getResult('Stump', computerChoice);
+        showResult('Stump', computerChoice, resultMsg);
+      ">
+        <img src="https://cdn-icons-png.flaticon.com/512/686/686358.png" alt="Stump Image" class="choice-image">
+        <div class="choice-label">STUMP</div>
+      </button>
+    </div>
+
+    <div class="results-container">
+      <h3 id="user-move" class="result-item">Your move will appear here</h3>
+      <h3 id="computer-move" class="result-item">Computer's move will appear here</h3>
+      <h3 id="result" class="result-item">Make your first move!</h3>
+    </div>
+
+    <h3 id="score">Score: Won: 0, Lost: 0, Tie: 0</h3>
+
+    <button class="reset-btn" onclick="localStorage.clear(); resetScore();">
+      <i class="fas fa-redo-alt"></i> Reset Game
+    </button>
+  </div>
+
+  <script>
+    let scoreStr = localStorage.getItem('Score');
+    let score;
+    resetScore(scoreStr);
+
+    function resetScore(scoreStr) {
+      score = scoreStr ? JSON.parse(scoreStr) : {
+        win: 0,
+        lost: 0,
+        tie: 0,
+      };
+
+      score.displayScore = function() {
+        return `Score: Won: ${score.win}, Lost: ${score.lost}, Tie: ${score.tie}`;
+      };
+
+      showResult();
+    }
+
+    function generateComputerChoice() {
+      let randomNumber = Math.random() * 3;
+      if (randomNumber > 0 && randomNumber <= 1) {
+        return 'Bat';
+      } else if (randomNumber > 1 && randomNumber <= 2) {
+        return 'Ball';
+      } else {
+        return 'Stump'
+      }
+    }
+
+    function getResult(userMove, computerMove) {
+      if (userMove === 'Bat') {
+        if (computerMove === 'Ball') {
+          score.win++;
+          return 'You won! Bat beats Ball.';
+        } else if (computerMove === 'Bat') {
+          score.tie++;
+          return `It's a tie!`;
+        } else if (computerMove === 'Stump') {
+          score.lost++;
+          return 'Computer won! Stump beats Bat.';
+        }
+      } else if (userMove === 'Ball') {
+        if (computerMove === 'Ball') {
+          score.tie++;
+          return `It's a tie!`;
+        } else if (computerMove === 'Bat') {
+          score.lost++;
+          return 'Computer won! Bat beats Ball.';
+        } else if (computerMove === 'Stump') {
+          score.win++;
+          return 'You won! Ball beats Stump.';
+        }
+      } else {
+        if (computerMove === 'Ball') {
+          score.lost++;
+          return 'Computer won! Ball beats Stump.';
+        } else if (computerMove === 'Bat') {
+          score.win++;
+          return 'You won! Stump beats Bat.';
+        } else if (computerMove === 'Stump') {
+          score.tie++;
+          return `It's a tie!`;
+        }
+      }
+    }
+
+    function showResult(userMove, computerMove, result) {
+      localStorage.setItem('Score', JSON.stringify(score));
+      
+      const userMoveElement = document.querySelector('#user-move');
+      const computerMoveElement = document.querySelector('#computer-move');
+      const resultElement = document.querySelector('#result');
+      const scoreElement = document.querySelector('#score');
+      
+      if (userMove) {
+        userMoveElement.innerHTML = `<i class="fas fa-user"></i> You chose: <strong>${userMove}</strong>`;
+        userMoveElement.classList.add('win-text');
+      } else {
+        userMoveElement.innerHTML = `<i class="fas fa-user"></i> Your move will appear here`;
+        userMoveElement.classList.remove('win-text');
+      }
+      
+      if (computerMove) {
+        computerMoveElement.innerHTML = `<i class="fas fa-laptop"></i> Computer chose: <strong>${computerMove}</strong>`;
+        computerMoveElement.classList.add('lose-text');
+      } else {
+        computerMoveElement.innerHTML = `<i class="fas fa-laptop"></i> Computer's move will appear here`;
+        computerMoveElement.classList.remove('lose-text');
+      }
+      
+      if (result) {
+        resultElement.textContent = result;
+        
+        // Add appropriate class based on result
+        if (result.includes('You won')) {
+          resultElement.className = 'win-text';
+        } else if (result.includes('Computer won')) {
+          resultElement.className = 'lose-text';
+        } else {
+          resultElement.className = 'tie-text';
+        }
+      } else {
+        resultElement.textContent = 'Make your first move!';
+        resultElement.className = '';
+      }
+      
+      scoreElement.textContent = score.displayScore();
+    }
+  </script>
+</body>
+</html> -->

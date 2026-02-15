@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>ball bat stump game</h3>
+
+    <button onclick="
+    let randomNumber=Math.random()*3;
+    let computerChoice;
+    if(randomNumber<1){
+        computerChoice='bat';
+        // console.log('computerChoice is bat')
+    }
+    else if(randomNumber<2){
+        computerChoice='ball';
+        // console.log('computerChoice is ball')
+    }
+    else{
+        computerChoice='stump';
+        // console.log('computerChoice is stump')
+    }
+   
+    let resultMsg;
+if(computerChoice==='ball'){
+    resultMsg = `tie`;
+}
+else if(computerChoice==='bat'){
+    resultMsg = `computer won`;
+}
+else if(computerChoice==='stump'){
+    resultMsg = `user won`;
+}
+
+document.querySelector('#final').innerText=`you have chosen ball.\n computerchoice is ${computerChoice}.\n result is ${resultMsg}`
+
+    ">ball</button>
+
+
+
+    <button onclick="
+     randomNumber=Math.random()*3;
+    if(randomNumber<1){
+        computerChoice='bat';
+        // console.log('computerChoice is bat')
+    }
+    else if(randomNumber<2){
+        computerChoice='ball';
+        // console.log('computerChoice is ball')
+    }
+    else{
+        computerChoice='stump';
+        // console.log('computerChoice is stump')
+    }
+   
+
+if(computerChoice==='bat'){
+    resultMsg = `tie`;
+}
+else if(computerChoice==='ball'){
+    resultMsg = `user won`;
+}
+else if(computerChoice==='stump'){
+    resultMsg = `computer won`;
+}
+
+document.querySelector('#final').innerText=`you have chosen bat.\n computerchoice is ${computerChoice}.\n result is ${resultMsg}`
+
+    ">bat</button>
+
+
+
+
+    <button onclick="
+   randomNumber=Math.random()*3;
+   
+    if(randomNumber<1){
+        computerChoice='bat';
+        // console.log('computerChoice is bat')
+    }
+    else if(randomNumber<2){
+        computerChoice='ball';
+        // console.log('computerChoice is ball')
+    }
+    else{
+        computerChoice='stump';
+        // console.log('computerChoice is stump')
+    }
+   
+ 
+if(computerChoice==='stump'){
+    resultMsg = `tie`;
+}
+else if(computerChoice==='bat'){
+    resultMsg = `user won`;
+}
+else if(computerChoice==='ball'){
+    resultMsg = `computer won`;
+}
+
+document.querySelector('#final').innerText=`you have chosen stump.\n computerchoice is ${computerChoice}.\n result is ${resultMsg}`
+
+    ">stump</button>
+    
+    <h3 id="final"></h3>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Ball Bat Stump Game</h3>
+
+        <button onclick="
+    computerChoice=generatecomputerChoice();
+    resultMsg=getresult('ball',computerChoice)
+    showResult('ball',computerChoice,resultMsg);
+    ">ball</button>
+
+        <button onclick="
+    computerChoice=generatecomputerChoice();
+    resultMsg=getresult('bat',computerChoice);
+    showResult('bat',computerChoice,resultMsg);
+    ">bat</button>
+
+        <button onclick="
+    computerChoice=generatecomputerChoice();
+    resultMsg=getresult('stump',computerChoice)
+    showResult('stump',computerChoice,resultMsg);
+    ">stump</button>
+
+        <h3 id="final"></h3>
+
+        <script>
+
+            let score = {
+                win: 0,
+                lost: 0,
+                tie: 0,
+                displayscore: function () {
+                    return ` win = ${score.win}
+                             lost = ${score.lost}
+                             tie = ${score.tie}`
+                }
+            }
+
+            function generatecomputerChoice() {
+                let randomNumber = Math.random() * 3;
+                if (randomNumber < 1) {
+                    return 'bat';
+                }
+                else if (randomNumber < 2) {
+                    return 'ball';
+                }
+                else {
+                    return 'stump';
+                }
+            }
+
+            function getresult(usermove, computermove) {
+                if (usermove === 'ball') {
+                    if (computermove === 'ball') {
+                        score.tie++;
+                        return `tie`;
+
+                    } else if (computermove === 'bat') {
+                        score.lost++;
+                        return `computer won`;
+
+                    } else if (computermove === 'stump') {
+                        score.win++;
+                        return `user won`;
+
+                    }
+                }
+                else if (usermove === 'bat') {
+                    if (computermove === 'bat') {
+                        score.tie++;
+                        return `tie`;
+
+                    } else if (computermove === 'ball') {
+                        score.win++;
+                        return `user won`;
+
+
+                    } else if (computermove === 'stump') {
+                        score.lost++;
+                        return `computer won`;
+
+
+                    }
+                }
+                else {
+                    if (computerChoice === 'stump') {
+                        score.tie++;
+                        return `tie`;
+
+                    } else if (computerChoice === 'bat') {
+                        score.win++;
+                        return `user won`;
+
+
+                    } else if (computerChoice === 'ball') {
+                        score.lost++;
+                        return `computer won`;
+
+
+                    }
+                }
+            }
+            function showResult(userMove, computerChoice, resultMsg) {
+                document.querySelector('#final').innerText = `you have chosen ${userMove}.\n computerchoice is ${computerChoice}.\n
+                 ${resultMsg}
+                 ${score.displayscore()}
+                
+                `
+            }
+        </script>
+</body>
+
+</html>
