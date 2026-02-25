@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <style>
+      #button {
+        height: 50px;
+        width: 50px;
+      }
+      .js-large {
+        height: 100px;
+        width: 100px;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="button">click</button>
+    <script>
+      let button = document.querySelector("#button");
+      function double() {
+        button.classList.add("js-large");
+      }
+      let behaviour = function event() {
+        setTimeout(double, 2000);
+        console.log('asi')
+      };
+      button.addEventListener("click", behaviour);
+    </script>
+  </body>
+</html>
+<!-- 
+      function getelement(arr,position){
+          return arr[position-1]
+      }
+
+        function arrcopy(arr) {
+          return arr.slice(0, arr.length - 1 + 1);
+        }
+        let arr = [1, 9, 0, 8, 7];
+        console.log(arr);
+        console.log(arrcopy(arr));
+
+        function isprime(num) {
+          for (let i = 2; i < num; i++) {
+            if (num % i === 0) {
+              return false;
+            }
+          }
+          return true;
+        }
+
+        let num = 2;
+        let i = 0;
+        while (i < 10) {
+          if (isprime(num)) {
+            console.log(num);
+            i++;
+          }
+          num++;
+        }
+
+          -->

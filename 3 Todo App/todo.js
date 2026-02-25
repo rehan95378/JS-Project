@@ -14,7 +14,8 @@ function addTodo() {
 }
 
 function displayItems() {
-  let containerElement = document.querySelector('.grid-container');
+  // let containerElement = document.querySelector('.grid-container');
+  let containerElement = document.querySelector('.todo-container');
   let newHtml = '';
   for (let i = 0; i < todoList.length; i++) {
     let todoItem = todoList[i].item;

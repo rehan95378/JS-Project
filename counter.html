@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <style>
+      .js-even {
+        color: green;
+      }
+      .js-odd {
+        color: red;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="plus">++</button>
+    <button id="minus">--</button>
+    <button id="resetcount">Reset</button>
+
+    <h3 id="display"></h3>
+    <h3 id="display2">as</h3>
+
+    <script>
+      let total = JSON.parse(localStorage.getItem("total")) || 0;
+      let count = JSON.parse(localStorage.getItem("count")) || 0;
+      let display = document.querySelector("#display");
+      let display2 = document.querySelector("#display2");
+      let minusbtn = document.querySelector("#minus");
+      let plusbtn = document.querySelector("#plus");
+      let resetbtn = document.querySelector("#resetcount");
+      plusbtn.addEventListener("click", plus);
+      minusbtn.addEventListener("click", minus);
+      resetbtn.addEventListener("click", resetcount);
+
+      function totalcount() {
+        localStorage.setItem("total", JSON.stringify(total));
+        display2.innerText = `Total Count is ${total}`;
+      }
+
+      function plus() {
+        count++;
+        result();
+        total++;
+        totalcount();
+      }
+
+      function minus() {
+        // if (count > 0) {
+        //   count--;
+        // }
+        count--;
+        result();
+        total++;
+        totalcount();
+      }
+
+      function result() {
+        if (count % 2 == 0) {
+          display.classList.add("js-even");
+          display.classList.remove("js-odd");
+        } else {
+          display.classList.add("js-odd");
+          display.classList.remove("js-even");
+        }
+        
+        localStorage.setItem("count", JSON.stringify(count));
+
+        display.innerText = `Count is ${count}`;
+      }
+
+      function resetcount() {
+        localStorage.removeItem("count");
+        localStorage.removeItem("total");
+        total = 0;
+        count = 0;
+        result();
+        totalcount();
+      }
+      result();
+      totalcount();
+    </script>
+  </body>
+</html>

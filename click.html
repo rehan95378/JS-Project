@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+    <style>
+      #butt {
+        height: 50px;
+        width: 50px;
+        border: none;
+        border-radius: 5px;
+      }
+      .js-even {
+        background-color: blue;
+      }
+      .js-odd {
+        background-color: blueviolet;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="butt" onclick="press()"></button>
+    <script>
+  let timesclick = Number(localStorage.getItem('click')) || 0;
+
+  function press() {
+    timesclick++;
+    localStorage.setItem('click', timesclick);
+    updatebutton();
+  }
+
+  function updatebutton() {
+    let button = document.querySelector("#butt");
+
+    if (timesclick % 2 === 0) {
+      button.classList.add("js-even");
+      button.classList.remove("js-odd");
+    } else {
+      button.classList.add("js-odd");
+      button.classList.remove("js-even");
+    }
+
+    button.innerText = timesclick;
+  }
+
+  // Important: call on page load
+  updatebutton();
+</script>
+  </body>
+</html>
